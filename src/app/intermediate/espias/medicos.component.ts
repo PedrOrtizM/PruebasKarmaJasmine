@@ -19,7 +19,7 @@ export class MedicosComponent implements OnInit {
 
   ngOnInit() {
     this._medicoService.getMedicos()
-          .subscribe( medicos => this.medicos = medicos );
+          .subscribe( (medicos:any) => this.medicos = medicos );
   }
 
   agregarMedico() {
