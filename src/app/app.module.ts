@@ -5,6 +5,12 @@ import { AppComponent } from './app.component';
 import { MedicosComponent } from './intermediate/espias/medicos.component';
 import { MedicoComponent } from './intermediate2/medico/medico.component';
 import { HospitalComponent } from './intermediate2/hospital/hospital.component';
+import { IncrementadorComponent } from './intermediate2/incrementador/incrementador.component';
+import { RouterModule } from '@angular/router';
+import { RUTAS } from './advance/routes/app.routes';
+import { NavbarComponent } from './advance/navbar/navbar.component';
+import { RouterMedicoComponent } from './advance/router-medico/router-medico.component';
+
 
 
 @NgModule({
@@ -12,10 +18,14 @@ import { HospitalComponent } from './intermediate2/hospital/hospital.component';
     AppComponent,
     MedicosComponent,
     MedicoComponent,
-    HospitalComponent
+    HospitalComponent,
+    IncrementadorComponent,
+    NavbarComponent,
+    RouterMedicoComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    RouterModule.forRoot(RUTAS)
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -17,13 +17,16 @@ describe('MedicosComponent', () => {
 
         const medicos = ['medico1','medico2','medico3'];
     
-        // Espía en el servicio la funcion getMedicos y  haz un callback fake que te paso
+        // SpyOn es una instrucción  que nos permite hacer peticiones falsas
+        // Espía en el servicio la funcion "getMedicos" y  haz un callback fake que te paso
         // retorna los medicos con un obsevable con el operador from 
         spyOn( servicio, 'getMedicos' ).and.callFake(  () =>{
 
+            // retorna un observable con "from" de medicos
             return from( [ medicos ]);
         })
 
+        // Es necesario llamar al ngOnInit porque por defecto angular no lo inicia
         // Llamamos a la funcion que usando el servicio y ejecutando el getMedicos
         componente.ngOnInit();
         expect(componente.medicos.length).toBeGreaterThan(0);
@@ -32,9 +35,10 @@ describe('MedicosComponent', () => {
 
     it('Debe llamar al servidor para agregar un medico', () => {
 
+        // en el servicio la funcuion agregar médico 
         const espia = spyOn(servicio,'agregarMedico').and.callFake( ()=>{
 
-            return empty();
+            return empty(); // retorna un observable vacío
 
         })
 
@@ -49,19 +53,25 @@ describe('MedicosComponent', () => {
             id: 1,
             nombre: "Pedro"
         }
+
+
         spyOn(servicio,'agregarMedico').and.returnValue(  from([medico])  );
 
         componente.agregarMedico();
+
+        // Medicos es el arreglo que está en el component
         // Se espera que el médico esté en la posición 0 o mayor
         expect(componente.medicos.indexOf(medico)).toBeGreaterThanOrEqual(0);
         
         
     });
 
-    it('Si falla la inserción la propiedad mensajeError debe ser igual al de servicio', () => {
+    it('Si falla la inserción, la propiedad mensajeError debe ser igual al de servicio', () => {
 
         const miError = 'No se pudo guardar el médico';
 
+        // Espia al servicio y cuando se llame la función agregarMédico retorna un error con el 
+        // Mensaje de miError
         spyOn( servicio ,'agregarMedico' ).and.returnValue( throwError(miError) );
 
         componente.agregarMedico();
@@ -71,25 +81,28 @@ describe('MedicosComponent', () => {
     });
 
 
-    xit('Debe de llamar al servidor para borrar un médico', () => {
+    it('Debe de llamar al servidor para borrar un médico', () => {
+        
+       // espia las ventanas confirm y retorna true, para no tener que hacer clic en ok (No funciona)
+        spyOn( window, 'confirm' ).and.returnValue(true);
         
         const spy = spyOn( servicio, 'borrarMedico' ).and.returnValue( empty() );
         componente.borrarMedico('1');
 
-        // espia las ventanas confirm y retorna true, para no tener que hacer clic en ok (No funciona)
-        spyOn( window, 'confirm' ).and.returnValue(true);
-
-        expect( spy ).toHaveBeenCalledWith( '1' );
+        //expect(servicio.agregarMedico).toHaveBeenCalled();
+        expect( spy ).toHaveBeenCalledWith('1');
 
     });
     
-    xit('NO debe de llamar al servidor para borrar un médico', () => {
+    it('NO debe de llamar al servidor para borrar un médico', () => {
         
-        // espia las ventanas confirm y retorna true, para no tener que hacer clic en ok
+        // espia las ventanas confirm y retorna false, para no tener que hacer clic en cancelar
         spyOn( window, 'confirm' ).and.returnValue(false);
 
+        // Este espia nunca que se va a llamar porque el usuario dijo que no borrara
         const spy = spyOn( servicio, 'borrarMedico' ).and.returnValue( empty() );
        
+        
         componente.borrarMedico('1');
 
      

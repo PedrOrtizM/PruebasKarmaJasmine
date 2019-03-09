@@ -28,7 +28,7 @@ describe('Pruebas de Jugador', () => {
             nuevaVida = vida;
         })
 
-        // Ejecutamos la funcion y la nuevaVida obtendrá los cambios
+        // Ejecutamos la funcion y la nuevaVida obtendrá los cambios. Async
         jugador.recibeDanio(1000);
 
 

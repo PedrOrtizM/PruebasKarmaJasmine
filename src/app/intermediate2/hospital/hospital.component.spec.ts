@@ -6,19 +6,22 @@ describe('HospitalComponent', () => {
   let component: HospitalComponent;
   let fixture: ComponentFixture<HospitalComponent>;
 
+  // webpack tiene solo archivo para HTML y TS - lo mismo para el .compileComponents
+  // async para decirle al beforeEach que espere a que la función se termine 
   // no es necesario usar async porque ya en el WebPack viene incluido
-  // un solo archivo para HTML y TS - lo mismo para el .compileComponents
   beforeEach(async(() => {
     // TestBed.configureTestingModule({
     //   declarations: [ HospitalComponent ]
     // })
-    //.compileComponents(); 
+    //.compileComponents();  tampoco es necesario 
   }));
 
   beforeEach(() => {
-       TestBed.configureTestingModule({
-        declarations: [ HospitalComponent ]
-      })
+   
+    TestBed.configureTestingModule({
+      declarations: [ HospitalComponent ]
+    })
+
     fixture = TestBed.createComponent(HospitalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges(); // dispara el ciclo de detección de cambios de angular
